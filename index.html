@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Currency Converter</title>
+</head>
+<body>
+    <header class="v-header container">
+        <div class="video-wrapper">
+            <video src="bg-video.mp4" autoplay="true" loop="true" muted></video>
+        </div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <div class="input-group mb-3">
+                <input id="input-value" type="number" class="form-control" placeholder="Value to convert..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>PLN</option>
+                        <option value="1">EUR</option>
+                        <option value="2">USD</option>
+                        <option value="3">GBP</option>
+                      </select>
+                </div>
+                <div class="input-group-append">
+                    <a type="button" id="convert" class="btn btn-primary">Convert</a>
+                </div>
+            </div>
+            <div class="results">
+                <p>Results based on data from <span id="currency-date"></span>:</p>
+                <ul class="list-group list-group-flush">
+
+                </ul>
+            </div>
+        </div>
+    </header>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
