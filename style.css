@@ -61,11 +61,30 @@ body {
 
 .header-content p {
     display: block;
-    padding-bottom: 2rem;
 }
 
 .list-group {
-    max-height: 400px;
+    max-height: 350px;
     overflow-y: scroll;
     color: black;
+}
+
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+    box-shadow: inset 0 5px 8px rgba(21, 79, 165, 0.623);
+    margin-bottom: 3rem;
+}
+
+[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+
+#update-date {
+    height: 35px;
+    width: 200px;
+    text-align: center;
 }
