@@ -5,6 +5,8 @@ body {
     font-size: 1rem;
     line-height: 1.5;
     overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
 
 .v-header {
@@ -53,7 +55,8 @@ body {
 }
 
 .header-content h1 {
-    margin-bottom: 0;
+    margin-bottom: 5;
+    color: rgb(43, 43, 146);
 }
 
 .header-content p {

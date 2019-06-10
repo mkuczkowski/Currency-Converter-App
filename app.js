@@ -1,4 +1,4 @@
-const url = "https://api.exchangeratesapi.io/latest";
+const url = "https://api.exchangeratesapi.io/latest?base=";
 let baseCurrency = "PLN";
 let endpoint = url.concat("?base=" + baseCurrency);
 let valueToConvert = null;
@@ -9,12 +9,15 @@ document.querySelector(".results").style.visibility = "hidden";
 const inputValue = document.getElementById("input-value");
 inputValue.addEventListener("keyup", (event) => {
     valueToConvert = event.target.value;
-    console.log(valueToConvert);
-})
+});
+
+inputValue.addEventListener("input", (event) => {
+    valueToConvert = event.target.value;
+});
 
 const convertBtn = document.getElementById("convert");
 convertBtn.addEventListener("click", async () => {
-    if(valueToConvert !== null || valueToConvert === NaN) {
+    if(valueToConvert !== null && valueToConvert !== NaN) {
         getCurrency()
         .then(data => {
             const resultsList = document.querySelector(".list-group");
@@ -29,7 +32,6 @@ convertBtn.addEventListener("click", async () => {
                     listViewItem.className = "list-group-item";
                     listViewItem.appendChild(document.createTextNode(value + ": " + data.rates[value] * valueToConvert));
                     resultsList.appendChild(listViewItem);
-                    console.log(value + ": " + data.rates[value] * valueToConvert);
                 }
             }
         });
@@ -38,7 +40,11 @@ convertBtn.addEventListener("click", async () => {
 
 
 async function getCurrency() {
-    let response = await fetch(endpoint);
+    let response = await fetch(url.concat(baseCurrency));
     let data = await response.json();
     return data;
+}
+
+function updateBaseCurrency(select) {
+    baseCurrency = select.options[select.selectedIndex].text;
 }
