@@ -22,11 +22,18 @@ inputValue.addEventListener("input", (event) => {
     valueToConvert = event.target.value;
 });
 
-convertBtn.addEventListener("click", () => convertCurrency("latest"));
-dateUpdateBtn.addEventListener("click", () => convertCurrency(dateInput.value));
+convertBtn.addEventListener("click", () => {
+    const date = !dateInput.value ? "latest" : dateInput.value;
+    convertCurrency(date)
+});
+
+dateUpdateBtn.addEventListener("click", () => {
+    const date = !dateInput.value ? "latest" : dateInput.value;
+    convertCurrency(date)
+});
 
 async function convertCurrency(date) {
-    if(valueToConvert !== null && valueToConvert !== NaN) {
+    if(valueToConvert !== null && valueToConvert !== "" && !isNaN(valueToConvert)) {
         show(loadingSpinner);
         getCurrency(date)
         .then(data => {
@@ -36,23 +43,15 @@ async function convertCurrency(date) {
             show(results);
             currencyDate.innerHTML = data.date;
             dateInput.value = data.date;
-            console.log(dateInput.value);
-            for(let value in data.rates) {
-                if(data.rates.hasOwnProperty(value)) {
-                    const listViewItem = document.createElement('li');
-                    listViewItem.className = "list-group-item";
-                    listViewItem.appendChild(document.createTextNode(value + ": " + data.rates[value] * valueToConvert));
-                    resultsList.appendChild(listViewItem);
-                }
-            }
+            listAllElements(data.rates);
             hide(loadingSpinner);
         });
     }
 }
 
 async function getCurrency(date) {
-    let response = await fetch(url.concat(date + "?base=" + baseCurrency));
-    let data = await response.json();
+    const response = await fetch(url.concat(date + "?base=" + baseCurrency));
+    const data = await response.json();
     return data;
 }
 
@@ -66,4 +65,15 @@ function show(element) {
 
 function hide(element) {
     element.style.visibility = "hidden";
+}
+
+function listAllElements(object) {
+    for(let value in object) {
+        if(object.hasOwnProperty(value)) {
+            const listItem = document.createElement('li');
+            listItem.className = "list-group-item";
+            listItem.appendChild(document.createTextNode(value + ": " + object[value] * valueToConvert));
+            resultsList.appendChild(listItem);
+        }
+    }
 }
