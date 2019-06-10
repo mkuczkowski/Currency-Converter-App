@@ -1,12 +1,17 @@
 const url = "https://api.exchangeratesapi.io/latest?base=";
 let baseCurrency = "PLN";
-let endpoint = url.concat("?base=" + baseCurrency);
 let valueToConvert = null;
 
 const currencyDate = document.getElementById("currency-date");
-document.querySelector(".results").style.visibility = "hidden";
-
+const loadingSpinner = document.querySelector(".spinner-border");
+const results = document.querySelector(".results");
 const inputValue = document.getElementById("input-value");
+const resultsList = document.querySelector(".list-group");
+const convertBtn = document.getElementById("convert");
+
+hide(loadingSpinner);
+hide(results);
+
 inputValue.addEventListener("keyup", (event) => {
     valueToConvert = event.target.value;
 });
@@ -15,16 +20,15 @@ inputValue.addEventListener("input", (event) => {
     valueToConvert = event.target.value;
 });
 
-const convertBtn = document.getElementById("convert");
 convertBtn.addEventListener("click", async () => {
     if(valueToConvert !== null && valueToConvert !== NaN) {
+        show(loadingSpinner);
         getCurrency()
         .then(data => {
-            const resultsList = document.querySelector(".list-group");
             while(resultsList.firstChild) {
                 resultsList.removeChild(resultsList.firstChild);
             }
-            document.querySelector(".results").style.visibility = "visible";
+            show(results);
             currencyDate.innerHTML = data.date;
             for(let value in data.rates) {
                 if(data.rates.hasOwnProperty(value)) {
@@ -34,10 +38,10 @@ convertBtn.addEventListener("click", async () => {
                     resultsList.appendChild(listViewItem);
                 }
             }
+            hide(loadingSpinner);
         });
     }
 });
-
 
 async function getCurrency() {
     let response = await fetch(url.concat(baseCurrency));
@@ -47,4 +51,12 @@ async function getCurrency() {
 
 function updateBaseCurrency(select) {
     baseCurrency = select.options[select.selectedIndex].text;
+}
+
+function show(element) {
+    element.style.visibility = "visible";
+}
+
+function hide(element) {
+    element.style.visibility = "hidden";
 }
